@@ -15,8 +15,19 @@ pipeline {
 
         stage('SAST - Bandit Scan') {
             steps {
-                sh 'bandit -r . --severity-level medium -f txt -o bandit-report.txt || exit 1'
+                // Run Bandit and *don't fail yet*
+                sh 'bandit -r . --severity-level medium -f txt -o bandit-report.txt || true'
+
+                // Show results in console
                 sh 'cat bandit-report.txt'
+
+                // Fail build manually if Bandit found issues
+                sh '''
+                    if grep -q "Issue:" bandit-report.txt; then
+                        echo "Bandit found issues. Failing the build."
+                        exit 1
+                    fi
+                '''
             }
         }
     }

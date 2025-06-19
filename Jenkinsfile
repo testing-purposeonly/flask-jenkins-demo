@@ -12,7 +12,12 @@ pipeline {
                 sh 'pip3 install --user bandit'
             }
         }
-
+        
+        stage("Yo this is manually added by me hehehe"){
+        	steps {
+        	  sh 'echo Hello world!'
+        	}
+        }
         stage('SAST - Bandit Scan') {
             steps {
                 // Run Bandit and *don't fail yet*
@@ -30,6 +35,7 @@ pipeline {
                 '''
             }
         }
+
     }
 }
 

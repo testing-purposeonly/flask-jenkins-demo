@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/var/lib/jenkins/.local/bin:$PATH"
+    }
+
     stages {
         stage('Install Dependencies') {
             steps {
                 sh 'pip3 install -r requirements.txt'
-                sh 'pip3 install bandit'
+                sh 'pip3 install --user bandit'
             }
         }
 

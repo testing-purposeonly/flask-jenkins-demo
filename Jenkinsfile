@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/testing-purposeonly/flask-jenkins-demo'
-            }
-        }
         stage('Install Requirements') {
             steps {
                 sh 'pip3 install -r requirements.txt'

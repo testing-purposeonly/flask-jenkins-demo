@@ -2,15 +2,17 @@ pipeline {
     agent any
 
     stages {
-        stage('Install Requirements') {
+        stage('Install Dependencies') {
             steps {
                 sh 'pip3 install -r requirements.txt'
+                sh 'pip3 install bandit'
             }
         }
-        stage('Run App') {
+
+        stage('SAST - Bandit Scan') {
             steps {
-                sh 'nohup python3 app.py &'
-                sh 'sleep 5'
+                sh 'bandit -r . --severity-level medium -f txt -o bandit-report.txt || exit 1'
+                sh 'cat bandit-report.txt'
             }
         }
     }

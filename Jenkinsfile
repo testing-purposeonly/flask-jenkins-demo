@@ -9,12 +9,13 @@ pipeline {
         }
         stage('Install Requirements') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
         stage('Run App') {
             steps {
-                sh 'nohup python app.py &'
+                sh 'nohup python3 app.py &'
+                sh 'sleep 5'
             }
         }
     }
